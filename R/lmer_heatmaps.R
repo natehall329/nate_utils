@@ -1,6 +1,8 @@
 #' create a heatmap of fixed effects for a series of lmer model objects
 #'
 #' TODO: document.
+#'
+#' @importFrom limma zscoreT
 
 
 lmer_heatmaps <- function(lmer_list, box_width = .5,standardize = TRUE,coef_str_replace = NULL, substitue_str = "", viridis_theme = TRUE, background_base = 0, ...) {
