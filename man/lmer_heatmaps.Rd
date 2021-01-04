@@ -7,7 +7,6 @@
 lmer_heatmaps(
   lmer_list,
   box_width = 0.5,
-  standardize = TRUE,
   coef_str_replace = NULL,
   substitue_str = "",
   viridis_theme = TRUE,
