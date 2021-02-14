@@ -88,7 +88,7 @@ gmcmapply <- function(mvars, FUN, SIMPLIFY = TRUE, mc.cores = 1, ...){
     expand.dots[dot_overwrite] <- NULL
   }
 
-  if(is.list(mvars)){
+  if(class(mvars) == "list"){
   char_vals <- names(mvars[sapply(mvars, is.character)]) # For args that are passed as characters, they should be represented as such when being used in FUN.
 
   ## build grid of mvars to loop over, this ensures that each combination of various inputs is evaluated (equivalent to creating a structure of nested for loops)
@@ -96,7 +96,7 @@ gmcmapply <- function(mvars, FUN, SIMPLIFY = TRUE, mc.cores = 1, ...){
     mutate_at(char_vals, as.character) # convert back to character
   } else{
     # allow for user to pass their own customized grid
-    grid <- data.frame(mvars)
+    grid <- data.frame(mvars)  %>% arrange_all()
   }
 
 
