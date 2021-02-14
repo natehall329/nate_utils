@@ -7,7 +7,7 @@
 gmcmapply(mvars, FUN, SIMPLIFY = TRUE, mc.cores = 1, ...)
 }
 \arguments{
-\item{mvars}{a named list of variables to be combined and mapped over. These are equivalent to the layers of a nested for loop.}
+\item{mvars}{a named list of variables to be combined and mapped over. These are equivalent to the layers of a nested for loop. If desired, mvars can also be passed as a customized expand-grid-like data.frame.}
 
 \item{FUN}{user-defined function to apply over variables in mvars. N.B. This function is written to use the names of mvars as formal arguments to FUN. Thus, the majority of FUNs need not require any arguments to be specified. As long as the variable object names in FUN match the names of mvars,  gmapply will handle the translation of names(mvars) to FUN.}
 

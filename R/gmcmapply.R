@@ -1,6 +1,6 @@
 #' expand.grid-based multi-core multivariate apply (mcmapply) wrapper for fast implementation of nested looping structures
 #'
-#' @param mvars a named list of variables to be combined and mapped over. These are equivalent to the layers of a nested for loop.
+#' @param mvars a named list of variables to be combined and mapped over. These are equivalent to the layers of a nested for loop. If desired, mvars can also be passed as a customized expand-grid-like data.frame.
 #' @param FUN user-defined function to apply over variables in mvars. N.B. This function is written to use the names of mvars as formal arguments to FUN. Thus, the majority of FUNs need not require any arguments to be specified. As long as the variable object names in FUN match the names of mvars,  gmapply will handle the translation of names(mvars) to FUN.
 #' @param SIMPLIFY defaults to TRUE, which appends function output to a tibble of the expand.grid-ed mvars. FALSE exports a list, where length(list) = nrow(expand.grid(mvars)). TODO: implement an abstracted function that converts the list to a named, nested list when SIMPLIFY = FALSE.
 #' @param mc.cores number of cores to utilize if running in parallel. Defaults to 1, which implements mapply.
@@ -88,11 +88,18 @@ gmcmapply <- function(mvars, FUN, SIMPLIFY = TRUE, mc.cores = 1, ...){
     expand.dots[dot_overwrite] <- NULL
   }
 
+  if(is.list(mvars)){
   char_vals <- names(mvars[sapply(mvars, is.character)]) # For args that are passed as characters, they should be represented as such when being used in FUN.
 
   ## build grid of mvars to loop over, this ensures that each combination of various inputs is evaluated (equivalent to creating a structure of nested for loops)
   grid <- expand.grid(mvars,KEEP.OUT.ATTRS = FALSE) %>% arrange_all() %>% # arrange from left (captures nested loop ordering accurately). I got rid of of the ex.gr arg stringsAsFactors = FALSE in order to conserve the user's desired ordering.
     mutate_at(char_vals, as.character) # convert back to character
+  } else{
+    # allow for user to pass their own customized grid
+    grid <- data.frame(mvars)
+  }
+
+
 
   # specify formals of the function to be evaluated  by merging the grid to mapply over with expanded dot args
   argdefs <- rep(list(bquote()), ncol(grid) + length(expand.dots) + length(funArgs) + 1)
