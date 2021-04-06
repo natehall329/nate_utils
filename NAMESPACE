@@ -3,6 +3,7 @@
 export(gen_run_num)
 export(gmcmapply)
 export(lmer_heatmaps)
+export(obj_size)
 importFrom(limma,zscoreT)
 importFrom(parallel,mcmapply)
 importFrom(viridis,scale_fill_viridis)
