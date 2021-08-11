@@ -1,6 +1,6 @@
 #' create a heatmap of fixed effects for a series of lmer model objects
 #'
-#' TODO: document.
+#' TODO document.
 #'
 #' @importFrom limma zscoreT
 #' @importFrom viridis scale_fill_viridis
@@ -43,7 +43,8 @@ lmer_heatmaps <- function(lmer_list, box_width = .5, coef_str_replace = NULL, su
   # base matrix
   gg <- ggplot(data = nest_df) + geom_tile(aes(x=model_id, y=coeff, fill=z)) + scale_fill_viridis(name="z-statistic")
 
-  # flag significant effects with tiles by significance level. TODO: abstract into a function.
+  # flag significant effects with tiles by significance level.
+  # TODO abstract into a function.
 
   ### make frames for p < .05, p < .01, p < .005. These will get translated to the boxes on the matrix.
   nest_df$na.1 <- ifelse(nest_df$p < .1 & nest_df$p > .05, TRUE, FALSE)
@@ -67,7 +68,7 @@ lmer_heatmaps <- function(lmer_list, box_width = .5, coef_str_replace = NULL, su
 
   ### to help hide values close to 0, we can set the background to be at the 0 point on the viridis gradient
 
-  if(viridis_theme){ # TODO: abstract this into a self-contained theme for any plot using the viridis gradient in the future.
+  if(viridis_theme){ # TODO abstract this into a self-contained theme for any plot using the viridis gradient in the future.
 
     ## get exact 0 point rendered on viridis scale.
     l  <- cowplot::get_legend(gg)

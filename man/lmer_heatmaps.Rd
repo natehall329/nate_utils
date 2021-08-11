@@ -15,5 +15,5 @@ lmer_heatmaps(
 )
 }
 \description{
-TODO: document.
+TODO document.
 }
