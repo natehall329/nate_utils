@@ -12,20 +12,40 @@ lmer_heatmaps <- function(lmer_list, box_width = .5, coef_str_replace = NULL, su
 
   mod_coeffs <- lapply(lmer_list, function(x) {
     sum <- summary(x)
-    sum <- data.frame(sum$coefficients) %>% rownames_to_column() %>% rename(`coeff` = `rowname`,
-                                                                            `beta` = `Estimate`,
-                                                                            `se` = `Std..Error`
-                                                                            # `t` = `t.value`,
-                                                                            # `p` = `Pr...t..`
-    ) %>% dplyr::filter(coeff != "(Intercept)") %>%
-      setNames(gsub("\\.value", "",names(.))) #%>% setNames(str_replace(names(.),"Pr\\.", "p"))
-    colnames(sum)[grepl('Pr',colnames(sum))] <- 'p'
-    sum
-    # clean this up later. messy, but allows for t and z stats to get passed.
+
+    if(class(x) == "lmer"){
+      sum <- data.frame(sum$coefficients) %>% rownames_to_column() %>% rename(`coeff` = `rowname`,
+                                                                              `beta` = `Estimate`,
+                                                                              `se` = `Std..Error`
+                                                                              # `t` = `t.value`,
+                                                                              # `p` = `Pr...t..`
+      ) %>% dplyr::filter(coeff != "(Intercept)") %>%
+        setNames(gsub("\\.value", "",names(.))) #%>% setNames(str_replace(names(.),"Pr\\.", "p"))
+      colnames(sum)[grepl('Pr',colnames(sum))] <- 'p'
+      sum
+      # clean this up later. messy, but allows for t and z stats to get passed.
+    } else if (class(x) == "lme"){
+      sum <- data.frame(sum$tTable) %>% rownames_to_column() %>% rename(`coeff` = `rowname`,
+                                                                        `beta` = `Value`,
+                                                                        `se` = `Std.Error`
+                                                                        # `t` = `t.value`,
+                                                                        # `p` = `Pr...t..`
+      ) %>% dplyr::filter(coeff != "(Intercept)") %>%
+        setNames(gsub("\\.value", "",names(.))) #%>% setNames(str_replace(names(.),"Pr\\.", "p"))
+      sum
+
+    } else {
+      print("Model class must be lmer or lme!")
+      stop()
+    }
+
   })
 
 
   nest_df <- Map(cbind, model_id = names(mod_coeffs), mod_coeffs) %>% do.call(rbind, .) #%>% dplyr::select(model_id, coeff, t,df, p)
+  names(nest_df) <- tolower(names(nest_df))
+
+
 
   if("t" %in% names(nest_df)){
     nest_df$z <- mapply(limma::zscoreT, nest_df$t, nest_df$df) # remap t-scores to z scale if necessary
