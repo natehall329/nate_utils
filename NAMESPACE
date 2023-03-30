@@ -3,6 +3,7 @@
 export(gen_run_num)
 export(github_todo)
 export(gmcmapply)
+export(llsync)
 export(lmer_heatmaps)
 export(obj_size)
 import(tidyverse)
