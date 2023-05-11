@@ -9,6 +9,8 @@ source_directory(dir_path, recursive = TRUE)
 \arguments{
 \item{dir_path}{A character string specifying the path to the directory
 containing the R scripts to be sourced.}
+
+\item{recursive}{list recurisvely into the directory being sourced}
 }
 \value{
 This function has no return value.

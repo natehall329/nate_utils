@@ -6,6 +6,7 @@
 #'
 #' @param dir_path A character string specifying the path to the directory
 #'   containing the R scripts to be sourced.
+#' @param recursive list recurisvely into the directory being sourced
 #'
 #' @return This function has no return value.
 #'
