@@ -4,7 +4,7 @@
 \alias{source_directory}
 \title{Source all R scripts in a directory}
 \usage{
-source_directory(dir_path, ...)
+source_directory(dir_path, recursive = TRUE)
 }
 \arguments{
 \item{dir_path}{A character string specifying the path to the directory

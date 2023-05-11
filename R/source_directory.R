@@ -18,9 +18,9 @@
 #'
 #' @export
 
-source_directory <- function(dir_path, ...) {
+source_directory <- function(dir_path, recursive = TRUE) {
   # Obtain a list of all .R files in the directory
-  r_files <- list.files(dir_path, pattern = "\\.R$", full.names = TRUE, ...)
+  r_files <- list.files(dir_path, pattern = "\\.R$", full.names = TRUE, recursive = recursive)
 
   # Check if there are any .R files
   if (length(r_files) > 0) {
