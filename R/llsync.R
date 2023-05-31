@@ -14,7 +14,7 @@
 #' llsync("/local/path/file", "/proj/remote/path/")
 #' llsync("/proj/remote/path/file", "/local/path/")
 
-llsync <- function(path_from, path_to, onyen = natehall){
+llsync <- function(path_from, path_to, onyen = "natehall"){
   ## the ll path needs to be tagged with the remote. can use paths to determine this.
   ##
   if (startsWith(path_from, "/proj")) {

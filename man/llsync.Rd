@@ -4,7 +4,7 @@
 \alias{llsync}
 \title{llsync: Synchronize local and remote files using rsync}
 \usage{
-llsync(path_from, path_to, onyen = natehall)
+llsync(path_from, path_to, onyen = "natehall")
 }
 \arguments{
 \item{path_from}{character, the source path of the file(s) to be synced.}
