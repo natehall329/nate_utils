@@ -68,6 +68,7 @@
 #' @section TODO: 1. edit body of FUN to create logs for all child processes using sink().2. For SIMPLIFY = FALSE add abstracted function from https://stackoverflow.com/questions/55264739/convert-nested-data-frame-to-a-hierarchical-list to create a hierarchical named list. 3. abstract grid.expand sorting into function and allow return on grid that is fed to mapply. 4. ensure list return when SIMPLIFY = TRUE. 5. Figure out flexible method for df passing (potentially leave empty and read from global envi).
 #'
 #' @importFrom parallel mcmapply
+#' @importFrom future.apply future_mapply
 #'
 #' @export
 
@@ -113,6 +114,10 @@ gmcmapply <- function(mvars, FUN, SIMPLIFY = TRUE, mc.cores = 1, ...){
 
   if(SIMPLIFY) {
     grid$fun_out  <- do.call(mcmapply, c(FUN, c(unname(grid), mc.cores = mc.cores))) # mc.cores = 1 == mapply
+
+    # should work on windows too i hope...
+    # grid$fun_out <- future_mapply(FUN, unname(grid), mc.cores = mc.cores)
+
     complete <- grid %>% tibble()
   } else{
     complete <- do.call(mcmapply, c(FUN, c(unname(grid), SIMPLIFY = FALSE, mc.cores = mc.cores)))
