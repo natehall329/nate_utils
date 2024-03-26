@@ -28,3 +28,4 @@ vignettes/*.pdf
 .Renviron
 tests
 .DS_Store
+dev
