@@ -4,13 +4,16 @@
 \alias{list_data_objects}
 \title{List Data Objects in the Current Environment}
 \usage{
-list_data_objects()
+list_data_objects(sort_by = "name")
+}
+\arguments{
+\item{sort_by}{A character string specifying the sort order. Can be "name" (default) or "size".}
 }
 \value{
-A character vector of the names of data objects in the current environment.
+Prints the names and sizes of data objects in the current environment, and the total size of all objects.
 }
 \description{
-This function lists all data objects in the current R environment, excluding functions.
+This function lists all data objects in the current R environment, excluding functions. It can sort the objects by name or size and display their sizes in a readable format.
 }
 \examples{
 \dontrun{
@@ -19,7 +22,10 @@ This function lists all data objects in the current R environment, excluding fun
   y <- data.frame(a = 1:5, b = 6:10)
   z <- "Hello, world!"
 
-  # Print data objects
-  print(list_data_objects())
+  # Print data objects sorted by name
+  list_data_objects()
+
+  # Print data objects sorted by size
+  list_data_objects("size")
 }
 }
