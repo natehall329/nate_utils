@@ -20,7 +20,7 @@ llsync <- function(path_from, path_to, onyen = "natehall"){
   if (startsWith(path_from, "/proj")) {
     path_from <- paste0(onyen, "@longleaf.unc.edu:", path_from)
   } else if (startsWith(path_to, "/proj")) {
-    path_to <- paste0("natehall@longleaf.unc.edu:", path_to)
+    path_to <- paste0(onyen, "@longleaf.unc.edu:", path_to)
   } else {
     stop("Error: None of the paths begin with '/proj'")
   }
